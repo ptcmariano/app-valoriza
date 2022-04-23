@@ -5,6 +5,15 @@
       src="~assets/quasar-logo-vertical.svg"
       style="width: 200px; height: 200px"
     >
+    <q-btn
+      class="q-mt-xl"
+      color="white"
+      text-color="blue"
+      unelevated
+      to="/"
+      label="Go List"
+      no-caps
+    />
   </q-page>
 </template>
 
