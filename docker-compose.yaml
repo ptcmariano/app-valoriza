@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+
+  app:
+    build:
+      context: ./docker
+      dockerfile: ./Dockerfile.frontend
+    container_name: app-valoriza
+    command: "sh /home/node/entryfile.frontend.sh"
+    ports:
+      - 8080:8080
+    working_dir: /home/node/app
+    volumes:
+      - ./frontend:/home/node/app
+    depends_on:
+      - db
+  api:
+    image: node:16.14.2-alpine3.15
+    container_name: api-valoriza
+    command: "npm run dev"
+    ports:
+      - 3000:3000
+    working_dir: /home/node/api
+    volumes:
+      - ./backend:/home/node/api
+    depends_on:
+      - db
+  db:
+    image: postgres:11
+    container_name: api-valoriza-db
+    restart: always
+    tty: true
+    volumes:
+      - ./backend/.docker/dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=nest
